@@ -1,92 +1,53 @@
-function drawFace(canvas, opts) {
-    var ctx = canvas.getContext("2d");
-    ctx.save();
-    ctx.lineWidth = opts.radius * 0.075;
-    ctx.strokeStyle = opts.lineColor;
-    ctx.beginPath();
-    ctx.arc(opts.x, opts.y, opts.radius, opts.startAngle, opts.endAngle);
-    ctx.stroke();
-    ctx.fillStyle = opts.fill;
-    ctx.fill();
-    ctx.restore();
-}
-
-function drawSmile(canvas, opts, flipSmile) {
-    var ctx = canvas.getContext("2d");
-    var radius = 40 * opts.radius * 0.0125;
-    var x = opts.x;
-    var y, startAngle, endAngle;
-
-    if (flipSmile) {
-        y = opts.y + opts.radius * 0.7;
-        startAngle = -Math.PI * 0.85; //Math.PI * 0.1;
-        endAngle = -0.5; //-Math.PI * 1.1;
-    } else {
-        y = opts.y + opts.radius * 0.1;
-        startAngle = Math.PI * 0.1;
-        endAngle = -Math.PI * 1.1;
-    }
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(x, y, radius, startAngle, endAngle);
-    ctx.lineWidth = opts.radius * 0.1;
-
-    ctx.strokeStyle = opts.lineColor;
-    ctx.stroke();
-    ctx.restore();
-}
-
-function drawEyes(canvas, opts) {
-    var xOffset = opts.radius * 0.5;
-    var radius = opts.radius * 0.15;
-
-    drawEye(canvas, opts, xOffset, 0, radius); // Left
-    drawEye(canvas, opts, -xOffset, 0, radius); // Right
-}
-
-function drawEye(canvas, opts, centerX, centerY, radius) {
-    var ctx = canvas.getContext("2d");
-
-    // Save state
-    ctx.save();
-
-    // Translate context so height is 1/3'rd from top of enclosing circle
-    ctx.translate(opts.x, opts.y - (opts.radius / 3));
-
-    // Scale context horizontally by 50%
-    ctx.scale(0.5, 1);
-
-    // Draw circle which will be stretched into an oval
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-
-    // Apply styling
-    ctx.fillStyle = opts.lineColor;
-    ctx.fill();
-    ctx.lineWidth = radius * 0.75;
-    ctx.strokeStyle = opts.lineColor;
-    ctx.stroke();
-
-    // Restore to original state
-    ctx.restore();
-}
-
-function drawHappyFace(canvas, opts, flipSmile) {
-    opts = opts || {};
-
-    var defaultRadius = 10;
-    var options = {
-        x: opts.x || (defaultRadius / 0.9),
-        y: opts.y || (defaultRadius / 0.9),
-        radius: opts.radius || defaultRadius,
-        startAngle: 0,
-        endAngle: 2 * Math.PI,
-        fill: opts.fill || 'yellow',
-        lineColor: opts.lineColor || 'black'
+function Smile(x, y) {
+    var radius = 50;
+    var canvasID = "myCanvas";
+    var c = document.getElementById(canvasID);
+    var draw = c.getContext("2d");
+    this.x = x;
+    this.y = y;
+    var drawFace = function() {
+        //to draw a surface on canvas element pass 2d as an argument in the getContext function
+        //to start a new path invoke BeginPath function.
+        //Call this function when you want to create a new path
+        draw.beginPath();
+        //to specify a color or style for your canvas use fillStyle property
+        draw.fillStyle = "yellow";
+        //to create a full circle invoke the arc method and in that method
+        //pass the value for x and y, radius, start point,
+        draw.arc(this.x, this.y, radius, 0, Math.PI * 2, true);
+        //to close the path invoke the closePath function
+        draw.closePath();
+        //invoke fill function to fill the canvas with a circle and in that circle a color of yellow
+        draw.fill();
     };
-
-    drawFace(canvas, options);
-    drawEyes(canvas, options);
-    drawSmile(canvas, options, flipSmile);
+    var drawEye = function() {
+        //moveTo function is used to move the starting point of the canvas to a new point
+        //x value is 55 and y value is 50
+        eye.moveTo(this.x - 20, this.y - 25);
+        //from the new point, begin a new path
+        eye.beginPath();
+        //fill the style with color black
+        eye.fillStyle = "black";
+        //left round eye
+        eye.arc(this.x - 25, this.y - 25, 4, 0, Math.PI * 2, true);
+        eye.closePath();
+        eye.fill();
+        //move to the new sub path from the current point and create a right eye
+        eye.moveTo(this.x + 28, this.y - 26);
+        eye.beginPath();
+        eye.fillStyle = "black";
+        //right round eye
+        eye.arc(this.x + 25, this.y - 25, 4, 0, Math.PI * 2, true);
+        eye.closePath();
+        eye.fill();
+    };
+    var drawSmile = function() {
+        //105 means x it will go the left side and 75 means y it will go upward of //downward
+        smile.moveTo(this.x + 30, this.y);
+        smile.beginPath();
+        smile.strokeStyle = "red";
+        smile.arc(this.x, this.y, 30, 0, Math.PI, false);
+        //to draw a half rounded circle with a line stroke we can invoke the stroke function
+        smile.stroke();
+    };
 }
