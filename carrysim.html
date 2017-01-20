@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<style>
+    body {
+        background-color: powderBlue;
+    }
+</style>
+
+<head>
+    <title>Carrying Capacity Simulation</title>
+</head>
+
+
+<body>
+    <h1>
+      Welcome to the Carrying Capacity simulation!
+    </h1>
+    <div>
+        <p>This simulation will allow the user to enter the initial population, the carrying capacity, and the maximum growth rate per capita to see how a population changes over time!</p>
+        <p>Please begin by placing the organisms in the canvas below and filling out the necessary information in the text fields.</p>
+        <div>
+            <input id="popSizeField" type="text"> Population Size</input>
+        </div>
+        <div>
+            <input id="rmaxField" type="text"> rmax</input>
+        </div>
+        <div>
+            <input id="kfield" type="text"> Carrying Capacity</input>
+        </div>
+        <div>
+            <button id="startSimButton" type="button">   Start Simulation</button>
+        </div>
+        <div> Carrying capacity relation:
+            <img src="BIO-412-Ch06-Eq17.gif" style="width:300px;height:100px;"> </img>
+        </div>
+    </div>
+
+    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        alert("Script is working");
+        $(document).ready(function() {
+            $("#startSimButton").on("click", function() {
+                alert("jquery is working");
+            });
+        });
+        alert("Script is still working");
+    </script>
+</body>
+
+</html>
