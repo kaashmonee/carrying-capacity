@@ -37,14 +37,25 @@
 
     <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="objects.js"></script>
     <script>
-        alert("Script is working");
+        var x1 = 0;
+        var x2 = 0;
+        var isDown = false;
+        //alert("Script is working");
         $(document).ready(function() {
             $("#startSimButton").on("click", function() {
                 alert("jquery is working");
             });
+
+            $("#myCanvas").click(function(e) {
+                x1 = e.offsetX;
+                x2 = e.offsetY;
+                alert(x1 + " " + x2); //WORKS
+            });
         });
-        alert("Script is still working");
+        //alert("Script is still working");
+        alert("x: " + x1 + " x2: " + x2);
     </script>
 </body>
 
