@@ -35,27 +35,28 @@
         </div>
     </div>
 
-    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;"></canvas>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="objects.js"></script>
     <script>
-        var x1 = 0;
-        var x2 = 0;
+        var smileX = 0;
+        var smileY = 0;
         var isDown = false;
-        //alert("Script is working");
+        var smileyArray = new Array();
+        alert("Script is working");
         $(document).ready(function() {
             $("#startSimButton").on("click", function() {
                 alert("jquery is working");
             });
 
             $("#myCanvas").click(function(e) {
-                x1 = e.offsetX;
-                x2 = e.offsetY;
-                alert(x1 + " " + x2); //WORKS
+                smileX = e.offsetX; //gets x-coordinate of mouse on canvas
+                smileY = e.offsetY; //gets y-coordinate of mouse on canvas
+                var org = new Organism(smileX, smileY);
+                org.create();
             });
         });
-        //alert("Script is still working");
-        alert("x: " + x1 + " x2: " + x2);
+        alert("Script is still working");
     </script>
 </body>
 

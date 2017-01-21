@@ -1,11 +1,11 @@
-function Smile(x, y) {
+/*function Smile(x, y) {
     var radius = 50;
     var canvasID = "myCanvas";
     var c = document.getElementById(canvasID);
     var draw = c.getContext("2d");
     this.x = x;
     this.y = y;
-    var drawFace = function() {
+    this.drawFace = function() {
         //to draw a surface on canvas element pass 2d as an argument in the getContext function
         //to start a new path invoke BeginPath function.
         //Call this function when you want to create a new path
@@ -20,7 +20,7 @@ function Smile(x, y) {
         //invoke fill function to fill the canvas with a circle and in that circle a color of yellow
         draw.fill();
     };
-    var drawEye = function() {
+    this.drawEye = function() {
         //moveTo function is used to move the starting point of the canvas to a new point
         //x value is 55 and y value is 50
         eye.moveTo(this.x - 20, this.y - 25);
@@ -41,7 +41,7 @@ function Smile(x, y) {
         eye.closePath();
         eye.fill();
     };
-    var drawSmile = function() {
+    this.drawSmile = function() {
         //105 means x it will go the left side and 75 means y it will go upward of //downward
         smile.moveTo(this.x + 30, this.y);
         smile.beginPath();
@@ -49,5 +49,22 @@ function Smile(x, y) {
         smile.arc(this.x, this.y, 30, 0, Math.PI, false);
         //to draw a half rounded circle with a line stroke we can invoke the stroke function
         smile.stroke();
+    };
+} */
+
+
+function Organism(x, y) {
+    var radius = 50;
+    var canvasID = "myCanvas";
+    var canvas = document.getElementById(canvasID);
+    var context = canvas.getContext("2d");
+    this.create = function() {
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.fillStyle = "yellow";
+        context.fill();
+        context.strokeStyle = "black";
+        context.stroke();
+        context.closePath();
     };
 }
