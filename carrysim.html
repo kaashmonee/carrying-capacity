@@ -36,17 +36,32 @@
     </div>
 
     <canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;"></canvas>
+    <div>
+        <p>Time elapsed is:
+            <a id="timeElapsed"></a>
+        </p>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="objects.js"></script>
     <script>
+        var cnvs = document.getElementById("myCanvas");
+        var ctx = cnvs.getContext("2d");
         var smileX = 0;
         var smileY = 0;
-        var isDown = false;
         var smileyArray = new Array();
         alert("Script is working");
+
+        document.rval = 0;
+        docment.k = 0;
+        document.populationSize = 0;
+
         $(document).ready(function() {
             $("#startSimButton").on("click", function() {
-                alert("jquery is working");
+                document.rval = parseFloat($("#rmaxField").val());
+                document.k = parseInt($("#kfield").val());
+                document.populationSize = parseInt($("#popSizeField").val());
+                alert(document.rval + " " + document.k);
+                startSim();
             });
 
             $("#myCanvas").click(function(e) {
@@ -54,8 +69,53 @@
                 smileY = e.offsetY; //gets y-coordinate of mouse on canvas
                 var org = new Organism(smileX, smileY);
                 org.create();
+                smileyArray.push(org);
+                $("#popSizeField").val(smileyArray.length);
+                populationSize = smileyArray.length;
             });
+
         });
+
+        var dt = 1;
+        var time = 0;
+
+        function sim() {
+            var dn = (document.rval * document.populationSize * (document.k - document.populationSize) / document.k) * dt;
+            alert("dn= " + dn);
+            document.populationSize = parseInt(document.populationSize);
+            document.populationSize += dn;
+            alert(document.populationSize);
+            //if difference is negative, population is growing
+            //if differnece is positive, population is receding
+            var difference = smileyArray.length - document.populationSize;
+            alert(cnvs.height);
+            alert("method works and difference is: " + difference);
+            if (difference < 0) {
+                for (var ind = 0; ind < Math.abs(difference); ind++) { //adds missing organisms to canvas and array
+                    var o = new Organism(Math.floor(Math.random() * cnvs.width), Math.floor(Math.random() * cnvs.height));
+                    o.create();
+                    smileyArray.push(o);
+                }
+                alert(smileyArray.length);
+            } else {
+                for (var ind = 0; ind < Math.abs(difference); ind++) { //gets rid of extraneous organisms
+                    smileyArray.splice(smileyArray.length - 1, 1);
+                }
+                ctx.clearRect(0, 0, cnvs.width, cnvs.height);
+                for (org in smileyArray) {
+                    org.create();
+                }
+                alert(smileyArray.length);
+
+            }
+            time++;
+            $("#timeElapsed").replaceWith(time);
+        }
+
+        function startSim() {
+            setInterval(sim, 1000); //starts the simulation
+        }
+
         alert("Script is still working");
     </script>
 </body>
