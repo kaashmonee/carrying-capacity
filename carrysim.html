@@ -40,6 +40,12 @@
         <p>Time elapsed is:
             <a id="timeElapsed"></a>
         </p>
+        <p>Population Size is:
+            <a id="populationSize"></a>
+        </p>
+        <p>Change in population every 0.1 * t is:
+            <a id="changeInPop"></a>
+        </p>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="objects.js"></script>
@@ -51,16 +57,16 @@
         var smileyArray = new Array();
         alert("Script is working");
 
-        document.rval = 0;
-        docment.k = 0;
-        document.populationSize = 0;
+        var rval = 0;
+        var k = 0;
+        var populationSize = 0;
 
         $(document).ready(function() {
             $("#startSimButton").on("click", function() {
-                document.rval = parseFloat($("#rmaxField").val());
-                document.k = parseInt($("#kfield").val());
-                document.populationSize = parseInt($("#popSizeField").val());
-                alert(document.rval + " " + document.k);
+                rval = parseFloat($("#rmaxField").val());
+                k = parseInt($("#kfield").val());
+                populationSize = parseInt($("#popSizeField").val());
+                alert(rval + " " + k);
                 startSim();
             });
 
@@ -76,18 +82,22 @@
 
         });
 
-        var dt = 1;
+        var dt = 0.1;
         var time = 0;
 
         function sim() {
-            var dn = (document.rval * document.populationSize * (document.k - document.populationSize) / document.k) * dt;
-            alert("dn= " + dn);
-            document.populationSize = parseInt(document.populationSize);
-            document.populationSize += dn;
-            alert(document.populationSize);
+            alert(populationSize);
+            var dn = (rval * populationSize * (k - populationSize) / k) * dt;
+            alert("dn " + dn + "rval " + rval + " k " + k);
+
+
+            populationSize = parseInt(populationSize);
+            populationSize += dn;
+            alert(populationSize);
+
             //if difference is negative, population is growing
             //if differnece is positive, population is receding
-            var difference = smileyArray.length - document.populationSize;
+            var difference = smileyArray.length - populationSize;
             alert(cnvs.height);
             alert("method works and difference is: " + difference);
             if (difference < 0) {
@@ -102,13 +112,14 @@
                     smileyArray.splice(smileyArray.length - 1, 1);
                 }
                 ctx.clearRect(0, 0, cnvs.width, cnvs.height);
-                for (org in smileyArray) {
-                    org.create();
+                for (var index = 0; index < smileyArray.length; index++) {
+                    smileyArray[index].create();
                 }
                 alert(smileyArray.length);
 
             }
-            time++;
+
+
             $("#timeElapsed").replaceWith(time);
         }
 
