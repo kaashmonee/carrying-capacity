@@ -38,13 +38,13 @@
     <canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;"></canvas>
     <div>
         <p>Time elapsed is:
-            <a id="timeElapsed"></a>
+            <ins id="timeElapsedInsert"> </ins>
         </p>
         <p>Population Size is:
-            <a id="populationSize"></a>
+            <ins id="populationSizeInsert"></ins>
         </p>
         <p>Change in population every 0.1 * t is:
-            <a id="changeInPop"></a>
+            <ins id="changeInPopulationInsert"></ins>
         </p>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -84,29 +84,34 @@
 
         var dt = 0.1;
         var time = 0;
+        var dn = 0;
 
         function sim() {
-            alert(populationSize);
-            var dn = (rval * populationSize * (k - populationSize) / k) * dt;
-            alert("dn " + dn + "rval " + rval + " k " + k);
+            $("#timeElapsedInsert").empty();
+            $("#timeElapsedInsert").append(time);
+            $("#populationSizeInsert").empty();
+            $("#populationSizeInsert").append(populationSize);
+            $("#popSizeField").empty();
+            $("#popSizeField").val(smileyArray.length);
+            $("#changeInPopulationInsert").empty();
+            $("#changeInPopulationInsert").append(dn);
 
 
-            populationSize = parseInt(populationSize);
+            dn = (rval * populationSize * (k - populationSize) / k) * dt;
+            time += dt;
             populationSize += dn;
-            alert(populationSize);
+
 
             //if difference is negative, population is growing
             //if differnece is positive, population is receding
             var difference = smileyArray.length - populationSize;
-            alert(cnvs.height);
-            alert("method works and difference is: " + difference);
-            if (difference < 0) {
+            if (difference < 0) { //ind < Math.abs(difference) allows the program to function even with floats
                 for (var ind = 0; ind < Math.abs(difference); ind++) { //adds missing organisms to canvas and array
                     var o = new Organism(Math.floor(Math.random() * cnvs.width), Math.floor(Math.random() * cnvs.height));
                     o.create();
                     smileyArray.push(o);
                 }
-                alert(smileyArray.length);
+                //alert(smileyArray.length);
             } else {
                 for (var ind = 0; ind < Math.abs(difference); ind++) { //gets rid of extraneous organisms
                     smileyArray.splice(smileyArray.length - 1, 1);
@@ -115,12 +120,7 @@
                 for (var index = 0; index < smileyArray.length; index++) {
                     smileyArray[index].create();
                 }
-                alert(smileyArray.length);
-
             }
-
-
-            $("#timeElapsed").replaceWith(time);
         }
 
         function startSim() {
