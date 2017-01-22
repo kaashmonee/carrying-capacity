@@ -38,7 +38,7 @@
     <canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;"></canvas>
     <div>
         <p>Time elapsed is:
-            <ins id="timeElapsedInsert"> </ins>
+            <ins id="timeElapsedInsert"> </ins> years.
         </p>
         <p>Population Size is:
             <ins id="populationSizeInsert"></ins>
@@ -88,13 +88,13 @@
 
         function sim() {
             $("#timeElapsedInsert").empty();
-            $("#timeElapsedInsert").append(time);
+            $("#timeElapsedInsert").append(time.toFixed(2));
             $("#populationSizeInsert").empty();
-            $("#populationSizeInsert").append(populationSize);
+            $("#populationSizeInsert").append(populationSize.toFixed(2));
             $("#popSizeField").empty();
             $("#popSizeField").val(smileyArray.length);
             $("#changeInPopulationInsert").empty();
-            $("#changeInPopulationInsert").append(dn);
+            $("#changeInPopulationInsert").append(dn.toFixed(2));
 
 
             dn = (rval * populationSize * (k - populationSize) / k) * dt;
