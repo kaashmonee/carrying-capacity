@@ -55,7 +55,6 @@
         var smileX = 0;
         var smileY = 0;
         var smileyArray = new Array();
-        alert("Script is working");
 
         var rval = 0;
         var k = 0;
@@ -66,7 +65,6 @@
                 rval = parseFloat($("#rmaxField").val());
                 k = parseInt($("#kfield").val());
                 populationSize = parseInt($("#popSizeField").val());
-                alert(rval + " " + k);
                 startSim();
             });
 
@@ -87,6 +85,7 @@
         var dn = 0;
 
         function sim() {
+            //alert(smileyArray.length);
             $("#timeElapsedInsert").empty();
             $("#timeElapsedInsert").append(time.toFixed(2));
             $("#populationSizeInsert").empty();
@@ -124,10 +123,8 @@
         }
 
         function startSim() {
-            setInterval(sim, 1000); //starts the simulation
+            setInterval(sim, 3000); //starts the simulation
         }
-
-        alert("Script is still working");
     </script>
 </body>
 
