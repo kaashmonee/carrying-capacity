@@ -7,14 +7,24 @@
 
 <div id="testid"></div>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
+    var counter = 0;
     var trace1 = {
-        x: [1, 2, 3, 4],
-        y: [10, 15, 13, 17],
+        x: [],
+        y: [],
         type: "line"
     };
-    var data = [trace1];
-    Plotly.newPlot("testid", data);
+
+    function run() {
+        trace1.x.push(counter);
+        trace1.y.push(counter);
+        var data = [trace1];
+        $("#testid").empty();
+        Plotly.newPlot("testid", data);
+        counter += 1;
+    }
+    setInterval(run, 1000);
 </script>
 
 
