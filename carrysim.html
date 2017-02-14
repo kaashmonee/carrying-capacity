@@ -4,6 +4,19 @@
     body {
         background-color: powderBlue;
     }
+
+    #canvasDiv {
+        float: left;
+        margin-right: 30px;
+    }
+
+    #graphDiv {
+        float: left;
+        border-style: solid;
+        border-width: 1px;
+        height: 500px;
+        width: 800px;
+    }
 </style>
 
 <head>
@@ -34,9 +47,6 @@
             <img src="BIO-412-Ch06-Eq17.gif" style="width:300px;height:100px;"> </img>
         </div>
     </div>
-
-    <canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;"></canvas>
-    <div id="graphDiv"></div>
     <div>
         <p>Time elapsed is:
             <ins id="timeElapsedInsert"> </ins> years.
@@ -48,6 +58,10 @@
             <ins id="changeInPopulationInsert"></ins>
         </p>
     </div>
+    <div id="canvasDiv">
+        <canvas id="myCanvas" width="800" height="500" style="border:1px solid #000000;"></canvas>
+    </div>
+    <div id="graphDiv"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="objects.js"></script>
@@ -66,6 +80,16 @@
             x: [],
             y: [],
             type: "line"
+        };
+
+        var layout = {
+            title: "Carrying Capacity Simulation",
+            xaxis: {
+                title: "Time (s)"
+            },
+            yaxis: {
+                title: "Population Size"
+            }
         };
 
         $(document).ready(function() {
@@ -96,17 +120,19 @@
             //alert(smileyArray.length);
             $("#timeElapsedInsert").empty();
             $("#timeElapsedInsert").append(time.toFixed(2));
-            trace1.x.push(time);
-            trace1.y.push(populationSize);
-            var data = [trace1];
-            $("#graphDiv").empty();
-            Plotly.newPlot("graphDiv", data);
             $("#populationSizeInsert").empty();
             $("#populationSizeInsert").append(populationSize.toFixed(2));
             $("#popSizeField").empty();
             $("#popSizeField").val(smileyArray.length);
             $("#changeInPopulationInsert").empty();
             $("#changeInPopulationInsert").append(dn.toFixed(2));
+
+            //creating and updating the graph
+            trace1.x.push(time);
+            trace1.y.push(populationSize);
+            var data = [trace1];
+            $("#graphDiv").empty();
+            Plotly.newPlot("graphDiv", data, layout);
 
 
             dn = (rval * populationSize * (k - populationSize) / k) * dt;
